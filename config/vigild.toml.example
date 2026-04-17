@@ -1,0 +1,12 @@
+# vigild configuration
+poll_interval_secs = 5
+socket_path = "/run/vigild/status.sock"
+
+[network]
+listen_addr = "0.0.0.0:7777"
+# Tailscale IPs of peer vigild instances
+peers = []
+
+[units]
+# systemd unit names to watch (empty = watch all)
+watch = ["sshd.service"]
