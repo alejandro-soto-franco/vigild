@@ -2,6 +2,13 @@
 members = ["vigild-core", "vigild"]
 resolver = "2"
 
+[profile.rpm]
+inherits = "release"
+opt-level = 3
+debug = 2
+codegen-units = 1
+strip = "none"
+
 [workspace.dependencies]
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
