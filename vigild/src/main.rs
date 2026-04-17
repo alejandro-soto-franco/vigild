@@ -1,3 +1,4 @@
+mod collector;
 mod config;
 
 fn main() {
