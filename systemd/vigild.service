@@ -1,0 +1,18 @@
+[Unit]
+Description=Vigild - Multi-host systemd health daemon
+After=dbus.service network.target
+Requires=dbus.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/vigild /etc/vigild/config.toml
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=vigild
+RuntimeDirectory=vigild
+RuntimeDirectoryMode=0750
+
+[Install]
+WantedBy=multi-user.target
