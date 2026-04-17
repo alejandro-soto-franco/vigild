@@ -1,3 +1,4 @@
+mod aggregator;
 mod collector;
 mod config;
 mod network;
