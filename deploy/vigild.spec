@@ -1,5 +1,5 @@
 Name:           vigild
-Version:        0.1.0
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Multi-host systemd health daemon written in Rust
 
@@ -52,5 +52,10 @@ install -Dpm 0644 config/vigild.toml.example \
 %config(noreplace) %{_sysconfdir}/vigild/config.toml.example
 
 %changelog
+* Fri Apr 17 2026 Alejandro Soto Franco <sotofranco.eng@gmail.com> - 0.2.0-1
+- Report inactive/failed units in watch list instead of silently dropping them
+- Resolve unit aliases via LoadUnit (dbus.service -> dbus-broker.service)
+- Report not-found for missing units rather than omitting
+
 * Fri Apr 17 2026 Alejandro Soto Franco <sotofranco.eng@gmail.com> - 0.1.0-1
 - Initial release

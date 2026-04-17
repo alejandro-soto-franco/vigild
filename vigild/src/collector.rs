@@ -3,7 +3,7 @@ use tokio::time::{interval, Duration};
 use tracing::{error, info};
 use vigild_core::{
     peer::HealthReport,
-    systemd::{connect_system_bus, query_units},
+    systemd::{connect_system_bus, query_units, query_watched_units},
 };
 
 pub async fn run_collector(
@@ -23,16 +23,13 @@ pub async fn run_collector(
     let mut ticker = interval(Duration::from_secs(poll_interval_secs));
     loop {
         ticker.tick().await;
-        match query_units(&conn).await {
-            Ok(all_units) => {
-                let units = if watch.is_empty() {
-                    all_units
-                } else {
-                    all_units
-                        .into_iter()
-                        .filter(|u| watch.contains(&u.name))
-                        .collect()
-                };
+        let query_result = if watch.is_empty() {
+            query_units(&conn).await
+        } else {
+            query_watched_units(&conn, &watch).await
+        };
+        match query_result {
+            Ok(units) => {
                 let report = HealthReport {
                     host: hostname.clone(),
                     timestamp_unix: unix_now(),
@@ -42,7 +39,7 @@ pub async fn run_collector(
                     info!("No receivers for health report, continuing");
                 }
             }
-            Err(e) => error!("query_units failed: {e}"),
+            Err(e) => error!("unit query failed: {e}"),
         }
     }
 }
