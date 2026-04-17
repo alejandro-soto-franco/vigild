@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        Multi-host systemd health daemon written in Rust
 
 License:        MIT OR Apache-2.0
-URL:            https://github.com/alejandrosotofranco/vigild
+URL:            https://github.com/alejandro-soto-franco/vigild
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  cargo
@@ -26,7 +26,7 @@ as newline-delimited JSON.
 %autosetup
 
 %build
-/usr/bin/cargo build --release -p vigild
+/usr/bin/cargo build --release --offline --frozen -p vigild
 
 %install
 install -Dpm 0755 target/release/vigild %{buildroot}%{_bindir}/vigild
