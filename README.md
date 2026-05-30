@@ -45,8 +45,8 @@ sudo systemctl enable --now vigild
 
 ```bash
 ./deploy/mksrpm.sh
-rpmbuild --rebuild ~/rpmbuild/SRPMS/vigild-0.1.0-1.fc*.src.rpm
-sudo dnf install ~/rpmbuild/RPMS/x86_64/vigild-0.1.0-1.fc*.x86_64.rpm
+rpmbuild --rebuild ~/rpmbuild/SRPMS/vigild-*-1.fc*.src.rpm
+sudo dnf install ~/rpmbuild/RPMS/x86_64/vigild-*-1.fc*.x86_64.rpm
 ```
 
 ## Architecture
@@ -62,8 +62,10 @@ The RPM is built with `--offline --frozen` against a `cargo vendor` tree. `deplo
 
 ```bash
 ./deploy/mksrpm.sh
-copr-cli build alejandro-soto-franco/vigild ~/rpmbuild/SRPMS/vigild-0.1.0-1.fc*.src.rpm
+copr-cli build alejandro-soto-franco/vigild ~/rpmbuild/SRPMS/vigild-*-1.fc*.src.rpm
 ```
+
+Enabled COPR chroots: `fedora-42-x86_64`, `fedora-43-x86_64`, `fedora-44-x86_64`.
 
 ## License
 
