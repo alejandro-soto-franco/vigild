@@ -15,6 +15,7 @@ impl SharedState {
         self.reports.insert(report.host.clone(), report);
     }
 
+    #[allow(dead_code)]
     pub fn snapshot(&self) -> Vec<HealthReport> {
         self.reports.values().cloned().collect()
     }

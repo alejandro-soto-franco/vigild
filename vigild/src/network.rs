@@ -135,12 +135,11 @@ mod tests {
         };
         tx_b.send(report).unwrap();
 
-        let received = tokio::time::timeout(
-            std::time::Duration::from_secs(2),
-            rx_a.recv(),
-        )
-        .await;
+        let received = tokio::time::timeout(std::time::Duration::from_secs(2), rx_a.recv()).await;
 
-        assert!(received.is_ok(), "peer A did not receive report from peer B");
+        assert!(
+            received.is_ok(),
+            "peer A did not receive report from peer B"
+        );
     }
 }

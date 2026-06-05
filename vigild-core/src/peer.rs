@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::{error::Result, unit::UnitStatus};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HealthReport {

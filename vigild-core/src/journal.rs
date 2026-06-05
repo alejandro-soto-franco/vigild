@@ -1,6 +1,6 @@
+use crate::error::{CoreError, Result};
 use serde::{Deserialize, Serialize};
 use tokio::process::Command;
-use crate::error::{CoreError, Result};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct JournalEntry {

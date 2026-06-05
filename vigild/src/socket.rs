@@ -5,10 +5,7 @@ use tokio::sync::broadcast;
 use tracing::{error, info};
 use vigild_core::peer::HealthReport;
 
-pub async fn run_socket_server(
-    socket_path: PathBuf,
-    mut rx: broadcast::Receiver<HealthReport>,
-) {
+pub async fn run_socket_server(socket_path: PathBuf, mut rx: broadcast::Receiver<HealthReport>) {
     let _ = std::fs::remove_file(&socket_path);
     if let Some(parent) = socket_path.parent() {
         let _ = std::fs::create_dir_all(parent);
@@ -32,14 +29,9 @@ pub async fn run_socket_server(
                 Ok((mut stream, _)) => {
                     let mut client_rx = client_tx2.subscribe();
                     tokio::spawn(async move {
-                        loop {
-                            match client_rx.recv().await {
-                                Ok(line) => {
-                                    if stream.write_all(line.as_bytes()).await.is_err() {
-                                        break;
-                                    }
-                                }
-                                Err(_) => break,
+                        while let Ok(line) = client_rx.recv().await {
+                            if stream.write_all(line.as_bytes()).await.is_err() {
+                                break;
                             }
                         }
                     });

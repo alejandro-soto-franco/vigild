@@ -70,13 +70,10 @@ mod tests {
         let (tx, mut rx) = broadcast::channel(8);
         let handle = tokio::spawn(run_collector(tx, vec![], 1));
 
-        let report = tokio::time::timeout(
-            std::time::Duration::from_secs(3),
-            rx.recv(),
-        )
-        .await
-        .expect("timeout waiting for report")
-        .expect("recv error");
+        let report = tokio::time::timeout(std::time::Duration::from_secs(3), rx.recv())
+            .await
+            .expect("timeout waiting for report")
+            .expect("recv error");
 
         assert!(!report.units.is_empty());
         handle.abort();
