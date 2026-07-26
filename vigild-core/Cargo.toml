@@ -11,4 +11,3 @@ serde_json = { workspace = true }
 bincode = { workspace = true }
 thiserror = { workspace = true }
 zbus = { workspace = true }
-tracing = { workspace = true }
