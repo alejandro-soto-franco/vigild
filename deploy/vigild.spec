@@ -1,6 +1,6 @@
 Name:           vigild
 Version:        0.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Multi-host systemd health daemon written in Rust
 
 License:        MIT OR Apache-2.0
@@ -9,9 +9,6 @@ Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  cargo
 BuildRequires:  rust
-BuildRequires:  systemd-devel
-BuildRequires:  dbus-devel
-BuildRequires:  openssl-devel
 BuildRequires:  systemd-rpm-macros
 
 Requires:       systemd
@@ -30,7 +27,6 @@ as newline-delimited JSON.
 
 %install
 install -Dpm 0755 target/release/vigild %{buildroot}%{_bindir}/vigild
-install -d %{buildroot}%{_rundir}/vigild
 install -Dpm 0644 systemd/vigild.service \
     %{buildroot}%{_unitdir}/vigild.service
 install -Dpm 0644 config/vigild.toml.example \
@@ -52,6 +48,13 @@ install -Dpm 0644 config/vigild.toml.example \
 %config(noreplace) %{_sysconfdir}/vigild/config.toml.example
 
 %changelog
+* Tue Jul 28 2026 Alejandro Soto Franco <sotofranco.eng@gmail.com> - 0.2.0-2
+- Build for fedora-rawhide
+- Drop systemd-devel, dbus-devel and openssl-devel from BuildRequires: zbus is
+  pure Rust and the binary links only glibc, libgcc and libm
+- Drop the unpackaged /run/vigild install; the unit declares
+  RuntimeDirectory=vigild
+
 * Fri Apr 17 2026 Alejandro Soto Franco <sotofranco.eng@gmail.com> - 0.2.0-1
 - Report inactive/failed units in watch list instead of silently dropping them
 - Resolve unit aliases via LoadUnit (dbus.service -> dbus-broker.service)
