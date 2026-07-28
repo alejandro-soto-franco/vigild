@@ -26,7 +26,7 @@ tar czf "${TOPDIR}/SOURCES/${NAME}-${VERSION}.tar.gz" \
   ./LICENSE-MIT ./LICENSE-APACHE ./.cargo ./vendor ./.gitignore ./README.md
 
 cp deploy/${NAME}.spec "${TOPDIR}/SPECS/${NAME}.spec"
-rpmbuild -bs "${TOPDIR}/SPECS/${NAME}.spec"
+SRPM=$(rpmbuild -bs "${TOPDIR}/SPECS/${NAME}.spec" | awk '/^Wrote: / {print $2; exit}')
 
 echo
-echo "SRPM: ${TOPDIR}/SRPMS/${NAME}-${VERSION}-1.$(rpm --eval %{dist} | tr -d .).src.rpm"
+echo "SRPM: ${SRPM}"
