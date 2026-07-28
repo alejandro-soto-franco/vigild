@@ -62,10 +62,10 @@ The RPM is built with `--offline --frozen` against a `cargo vendor` tree. `deplo
 
 ```bash
 ./deploy/mksrpm.sh
-copr-cli build alejandro-soto-franco/vigild ~/rpmbuild/SRPMS/vigild-*-1.fc*.src.rpm
+copr-cli build alejandro-soto-franco/vigild ~/rpmbuild/SRPMS/vigild-*.src.rpm
 ```
 
-Enabled COPR chroots: `fedora-42-x86_64`, `fedora-43-x86_64`, `fedora-44-x86_64`.
+Enabled COPR chroots: `fedora-43-x86_64`, `fedora-44-x86_64`, `fedora-rawhide-x86_64`. Fedora branching is followed, so each new release inherits the rawhide chroot when it branches.
 
 ## License
 
