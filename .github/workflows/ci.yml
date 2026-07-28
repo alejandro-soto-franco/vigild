@@ -13,11 +13,19 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   test:
+    name: test (rust ${{ matrix.toolchain }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # stable tracks the toolchain the COPR chroots build with; 1.89 is the
+        # declared minimum in Cargo.toml.
+        toolchain: [stable, '1.89']
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.89
+      - uses: dtolnay/rust-toolchain@master
         with:
+          toolchain: ${{ matrix.toolchain }}
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
       - run: cargo fmt --all -- --check
